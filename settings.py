@@ -26,7 +26,7 @@ DATABASE_ENGINE = 'postgresql_psycopg2'
 DATABASE_NAME = 'djdns'
 DATABASE_USER = 'djdns'
 DATABASE_PASSWORD = '!djdns!'
-DATABASE_HOST = 'dbs01.mia01.digiport.net'
+DATABASE_HOST = 'localhost'
 DATABASE_PORT = ''
 
 # Local time zone for this installation. Choices can be found here:
