@@ -1,7 +1,7 @@
 # Django settings for djdns project.
 
 import logging, os.path
-PROJECT_DIR = os.path.curdir
+PROJECT_DIR = '/home/projects/djdns/'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOGGING_OUTPUT_ENABLED = DEBUG
