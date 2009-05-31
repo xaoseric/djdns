@@ -33,9 +33,13 @@ class Domain(models.Model):
         return self.name
 
 class Record(models.Model):
+    type_choices=(
+        (x,x) for x in ('A', 'CNAME', 'NS', 'MX', 'PTR', 'SOA', 'TXT')
+    )
     domain      = models.ForeignKey('Domain')
     name        = models.CharField(max_length=255, db_index=True)
-    type        = models.CharField(max_length=6, db_index=True, choices=((x,x) for x in ('A', 'CNAME', 'NS', 'MX', 'PTR', 'SOA')))
+    type        = models.CharField(max_length=6, db_index=True,
+                                   choices=type_choices)
     content     = models.CharField(max_length=255, db_index=True)
     ttl         = models.PositiveIntegerField(db_index=True, default=3200)
     prio        = models.PositiveIntegerField(null=True, blank=True, db_index=True)
@@ -43,7 +47,7 @@ class Record(models.Model):
 
     class Meta:
         db_table = 'records'
-        ordering = ( 'name', 'type' )
+        ordering = ( 'domain', 'type', 'prio', 'name' )
         unique_together = ( 'name', 'type', 'content' )
 
     def __unicode__(self):

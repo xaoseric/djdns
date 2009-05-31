@@ -39,6 +39,9 @@ class DNSRecord(object):
         elif name.endswith(self.domain):
             # fully qualified
             return name
+        elif name == '@' or name.startswith('@'):
+            # records pointing to the origin domain
+            return self.domain
         else:
             return name + '.' + self.domain
 
@@ -78,7 +81,11 @@ class TXT(DNSRecord):
 class PTR(DNSRecord):
     recordtype = 'PTR'
     validate_content = False
+
+class SOA(DNSRecord):
+    recordtype = 'SOA'
     validate_name = False
+    validate_content = False
 
 class BindZoneFileParser(object):
     """a parser for bind style zone files"""
@@ -141,6 +148,6 @@ class BindZoneFileParser(object):
             else:
                 return PTR(self.domain, record[0], record[-1])
         elif 'SOA' in record:
-            pass
+            raise str(record)
         else:
             raise RecordParseError('could not determine record type: %s' % str(record))
